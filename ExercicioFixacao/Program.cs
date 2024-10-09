@@ -6,7 +6,7 @@ namespace ExercicioFixacao
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            
         }
     }
 }
