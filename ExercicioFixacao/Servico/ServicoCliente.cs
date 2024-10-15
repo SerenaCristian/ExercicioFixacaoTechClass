@@ -1,7 +1,8 @@
-﻿using System;
-using ExercicioFixacao.Core.Entidades;
+﻿using ExercicioFixacao.Core.Entidades;
 using ExercicioFixacao.Infra;
-
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ExercicioFixacao.Servico
 {
@@ -14,22 +15,41 @@ namespace ExercicioFixacao.Servico
             _repositorioCliente = new RepositorioCliente();
         }
 
-        public void Add(Cliente cliente)
+        public void AdicionarCliente(Cliente cliente)
         {
-            if (cliente.Nome == cliente.Nome && cliente.Sobrenome == cliente.Sobrenome && cliente.Idade == cliente.Idade)
-            {
-                Console.WriteLine("Cliente já cadastrado");
-                return;
-            }
-            else if (cliente.Nome != cliente.Nome && cliente.Sobrenome != cliente.Sobrenome && cliente.Idade != cliente.Idade)
+            var clienteExistente = _repositorioCliente.GetClientes().FirstOrDefault(c =>
+                c.Nome == cliente.Nome &&
+                c.Sobrenome == cliente.Sobrenome &&
+                c.Idade == cliente.Idade);
 
+            if (clienteExistente != null)
             {
-                Console.WriteLine("Continuar cadastro");
+                Console.WriteLine("Cliente já cadastrado.");
                 return;
             }
-            _repositorioCliente.Add(cliente);
+
+            _repositorioCliente.AdicionarCliente(cliente);
+            Console.WriteLine("Cliente cadastrado com sucesso!");
         }
 
+        public List<Cliente> GetClientes()
+        {
+            return _repositorioCliente.GetClientes();
+        }
 
+        public void AtualizarCliente(Cliente cliente)
+        {
+            _repositorioCliente.AtualizarCliente(cliente);
+        }
+
+        public void DeleteFisico(Cliente cliente)
+        {
+            _repositorioCliente.DeleteFisico(cliente);
+        }
+
+        public void DeleteLogico(int id)
+        {
+            _repositorioCliente.DeleteLogico(id);
+        }
     }
 }
